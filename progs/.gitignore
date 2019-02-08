@@ -1,0 +1,4 @@
+*.o
+*.ali
+arm_formatter
+rtf2form
