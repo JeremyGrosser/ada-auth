@@ -1,16 +1,21 @@
 grammar adadoc;
 
 adadoc
-    : special+
+    : '`'? (special | paragraph)+
     ;
 
 special
     : '@' command
     ;
 
+paragraph
+	: '@begin' LEFT_BRACE LETTER+ RIGHT_BRACE text
+	  '@end' LEFT_BRACE LETTER+ RIGHT_BRACE
+	;
+
 command
     : (source_command | global_property | html_property
-    | rtf_property | other_command) WHITESPACE*
+    | rtf_property | other_command | scribe_command) WHITESPACE*
     ;
 
 source_command
@@ -57,8 +62,13 @@ rtf_property
     ;
 
 other_command
-    : comment | unknown
+    : comment | unknown | part
     ;
+
+scribe_command
+	: scribe_line_break | scribe_end_format | scribe_begin_center
+	| scribe_tab_stop
+	;
 
 source
     : 'Source' named_parameters
@@ -204,13 +214,33 @@ rtf_version_name
     ;
 
 comment
-    : 'Comment' text_parameter
+    : ('Comment' | 'comment') text_parameter
     ;
 
 /* unused? */
 unknown
     : comment
     ;
+
+part
+	: 'Part' text_parameter
+	;
+
+scribe_line_break
+	: '*'
+	;
+
+scribe_end_format
+	: '\\'
+	;
+
+scribe_begin_center
+	: '='
+	;
+
+scribe_tab_stop
+	: '^'
+	;
 
 named_parameters
     : LEFT_BRACE named_parameter (',' named_parameter)* RIGHT_BRACE
@@ -225,12 +255,12 @@ text_parameter
     ;
 
 text
-    : (LETTER | DIGIT | SYMBOL | WHITESPACE | LEFT_BRACE | RIGHT_BRACE)+
+    : ( . | '?' | '$' | '!' | '+' | '~' )+
     ;
 
-LEFT_BRACE : '[' | '(' | '{' | '<' ;
+LEFT_BRACE : '[' | '(' | '{' | '<' | '`' ;
 
-RIGHT_BRACE : '>' | '}' | ')' | ']' ;
+RIGHT_BRACE : '>' | '}' | ')' | ']' | '\'' | EOF ;
 
 WHITESPACE : ' ' | '\t' | '\r' | '\n' ;
 
