@@ -1,10 +1,12 @@
 GNATMAKE ?= gnatmake
 GNATCLEAN ?= gnatclean
 
+GNATFLAGS := ${GNATFLAGS} -gnata
+
 TARGETS := arm_formatter rtf2form
 
 all:
-	$(GNATMAKE) $(TARGETS)
+	$(GNATMAKE) ${GNATFLAGS} ${TARGETS}
 
 clean:
-	$(GNATCLEAN) $(TARGETS)
+	$(GNATCLEAN) ${TARGETS}
