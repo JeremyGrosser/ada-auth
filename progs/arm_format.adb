@@ -4042,7 +4042,7 @@ Ada.Text_IO.Put_Line("    -- No Start Paragraph (Del-NewOnly)");
 
 		    if RHS_Close_Ch /= ' ' then
 		        -- Now, handle the parameter:
-		        -- Stack it so we can process the end:
+		        -- Stack it so we can files process the end:
 		        Set_Nesting_for_Parameter
 			    (Command => Syntax_Rule_RHS,
 			     Close_Ch => RHS_Close_Ch);
