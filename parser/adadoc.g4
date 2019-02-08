@@ -71,7 +71,7 @@ scribe_command
 	;
 
 source
-    : 'Source' named_parameters
+    : 'Source' parameter_list
     ;
 
 toc
@@ -111,7 +111,7 @@ number_paragraphs
     ;
 
 title
-    : 'Title' named_parameters
+    : 'Title' parameter_list
     ;
 
 file_prefix
@@ -153,11 +153,11 @@ use_ms_dos_names
     ;
 
 html_kind_command
-    : 'HTMLKind' named_parameters
+    : 'HTMLKind' parameter_list
     ;
 
 html_nav_bar
-    : 'HTMLNavBar' named_parameters
+    : 'HTMLNavBar' parameter_list
     ;
 
 html_tabs
@@ -178,7 +178,7 @@ html_footer
     ;
 
 html_color
-    : 'HTMLColor' named_parameters
+    : 'HTMLColor' parameter_list
     ;
 
 html_new_revision_colors
@@ -190,15 +190,15 @@ single_rtf_output_file
     ;
 
 rtf_header_prefix
-    : 'RTFHeaderPrefix' named_parameters
+    : 'RTFHeaderPrefix' parameter_list
     ;
 
 rtf_footer_text
-    : 'RTFFooterText' named_parameters
+    : 'RTFFooterText' parameter_list
     ;
 
 rtf_footer
-    : 'RTFFooter' named_parameters
+    : 'RTFFooter' parameter_list
     ;
 
 rtf_page_size
@@ -206,11 +206,11 @@ rtf_page_size
     ;
 
 rtf_fonts
-    : 'RTFFonts' named_parameters
+    : 'RTFFonts' parameter_list
     ;
 
 rtf_version_name
-    : 'RTFVersionName' named_parameters
+    : 'RTFVersionName' parameter_list
     ;
 
 comment
@@ -242,8 +242,8 @@ scribe_tab_stop
 	: '^'
 	;
 
-named_parameters
-    : LEFT_BRACE named_parameter (',' named_parameter)* RIGHT_BRACE
+parameter_list
+    : LEFT_BRACE (text_parameter | named_parameter) (',' (text_parameter | named_parameter))* RIGHT_BRACE
     ;
 
 named_parameter
@@ -255,7 +255,7 @@ text_parameter
     ;
 
 text
-    : ( . | '?' | '$' | '!' | '+' | '~' )+
+    : ( . | '?' | '$' | '!' | '+' | '~' )+?
     ;
 
 LEFT_BRACE : '[' | '(' | '{' | '<' | '`' ;
